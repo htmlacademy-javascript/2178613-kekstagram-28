@@ -22,8 +22,6 @@ const createRandomIdFromRangeGenerator = function (min, max) {
   };
 };
 
-const isEnterKey = (evt) => evt.key === 'Enter';
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-
-export { createRandomIdFromRangeGenerator, getRandomInteger,isEscapeKey,isEnterKey };
+export {createRandomIdFromRangeGenerator, getRandomInteger, isEscapeKey};

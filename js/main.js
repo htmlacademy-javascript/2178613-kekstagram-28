@@ -1,4 +1,6 @@
-import './generate-photo.js';
-import './generate-comment.js';
-import './create-photo-elements.js';
-import './full-size-picture.js';
+import {createPictureElements, createPicturesList} from './create-picture-elements.js';
+import {userOpenFullSizePicture} from './full-size-picture.js';
+
+createPictureElements();
+createPicturesList();
+userOpenFullSizePicture();
