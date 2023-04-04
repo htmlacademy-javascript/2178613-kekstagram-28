@@ -53,18 +53,18 @@ const userOpenFullSizePicture = function () {
         loadMoreComments(newComments, socialComments, commentsQuantity);
       };
 
-      const closeFullSizePicture = function (onDocumentKeydown, closeEvent) {
+      const closeFullSizePicture = function (onKeyDown, closeEvent) {
         fullSizePicture.classList.add('hidden');
-        document.removeEventListener('keydown', onDocumentKeydown);
+        document.removeEventListener('keydown', onKeyDown);
         bigPictureCansel.removeEventListener('click', closeEvent);
         socialComments.innerHTML = '';
         commentsLoaderFullSizePicture.removeEventListener('click', loadComments);
       };
 
       // функция открытия полного размера фотографии
-      const openFullSizePicture = function (onDocumentKeydown, closeEvent) {
+      const openFullSizePicture = function (onKeyDown, closeEvent) {
         fullSizePicture.classList.remove('hidden');
-        document.addEventListener('keydown', onDocumentKeydown);
+        document.addEventListener('keydown', onKeyDown);
         bigPictureCansel.addEventListener('click', closeEvent);
         commentsLoaderFullSizePicture.addEventListener('click', loadComments);
       };
