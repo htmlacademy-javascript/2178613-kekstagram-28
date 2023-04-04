@@ -25,19 +25,22 @@ const commentsLoaderFullSizePicture = fullSizePicture.querySelector('.comments-l
 // список комментариев
 const socialComments = document.querySelector('.social__comments');
 // функция закрытия полного размера фотографии
-const closeFullSizePicture = function (keyDownEvent, closeEvent) {
+
+
+const closeFullSizePicture = function (keyDownEvent, closeEvent, loadComment) {
+  commentsLoaderFullSizePicture.removeEventListener('click', loadComment);
   fullSizePicture.classList.add('hidden');
   document.removeEventListener('keydown', keyDownEvent);
   bigPictureCansel.removeEventListener('click', closeEvent);
   socialComments.innerHTML = '';
-  commentsLoaderFullSizePicture.removeEventListener('click', loadMoreComments(newComments, socialComments, commentsQuantity));
 };
 
 // функция открытия полного размера фотографии
-const openFullSizePicture = function (keyDownEvent, closeEvent) {
+const openFullSizePicture = function (keyDownEvent, closeEvent, loadComment) {
   fullSizePicture.classList.remove('hidden');
   document.addEventListener('keydown', keyDownEvent);
   bigPictureCansel.addEventListener('click', closeEvent);
+  commentsLoaderFullSizePicture.addEventListener('click', loadComment);
 };
 
 // функция нажатия клавиши Escape для закрытия полного размера фотографии
@@ -52,8 +55,9 @@ const userOpenFullSizePicture = function () {
 
   picturesList.addEventListener('click', (evt) => {
     if (evt.target.closest('.picture__img')) {
+
+
       const commentsQuantity = evt.target.closest('.picture').querySelector('.picture__comments').textContent;
-      openFullSizePicture(onDocumentKeydown, closeFullSizePicture);
       fullSizePictureImg.src = evt.target.src;
       likesCountFullSizePicture.textContent = evt.target.closest('.picture').querySelector('.picture__likes').textContent;
       commentsCountFullSizePicture.textContent = evt.target.closest('.picture').querySelector('.picture__comments').textContent;
@@ -70,16 +74,11 @@ const userOpenFullSizePicture = function () {
         }
       }
 
-      commentsLoaderFullSizePicture.addEventListener('click', () => {
-        loadMoreComments(newComments, socialComments,commentsQuantity);
+      const loadComments = () => loadMoreComments(newComments, socialComments, commentsQuantity);
 
-      });
-
+      openFullSizePicture(onDocumentKeydown, closeFullSizePicture, loadComments);
 
       commentsCounterFullSizePicture.textContent = `${socialComments.children.length} из ${evt.target.closest('.picture').querySelector('.picture__comments').textContent}`;
-
-      // console.log('Загрузка новых комментариев');
-
 
     }
   });
