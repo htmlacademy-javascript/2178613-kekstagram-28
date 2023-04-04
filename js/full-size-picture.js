@@ -26,31 +26,6 @@ const commentsLoaderFullSizePicture = fullSizePicture.querySelector('.comments-l
 const socialComments = document.querySelector('.social__comments');
 // функция закрытия полного размера фотографии
 
-
-const closeFullSizePicture = function (keyDownEvent, closeEvent, loadComment) {
-  commentsLoaderFullSizePicture.removeEventListener('click', loadComment);
-  fullSizePicture.classList.add('hidden');
-  document.removeEventListener('keydown', keyDownEvent);
-  bigPictureCansel.removeEventListener('click', closeEvent);
-  socialComments.innerHTML = '';
-};
-
-// функция открытия полного размера фотографии
-const openFullSizePicture = function (keyDownEvent, closeEvent, loadComment) {
-  fullSizePicture.classList.remove('hidden');
-  document.addEventListener('keydown', keyDownEvent);
-  bigPictureCansel.addEventListener('click', closeEvent);
-  commentsLoaderFullSizePicture.addEventListener('click', loadComment);
-};
-
-// функция нажатия клавиши Escape для закрытия полного размера фотографии
-const onDocumentKeydown = function (evt) {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    closeFullSizePicture();
-  }
-};
-
 const userOpenFullSizePicture = function () {
 
   picturesList.addEventListener('click', (evt) => {
@@ -74,7 +49,32 @@ const userOpenFullSizePicture = function () {
         }
       }
 
-      const loadComments = () => loadMoreComments(newComments, socialComments, commentsQuantity);
+      const loadComments = function () {
+        loadMoreComments(newComments, socialComments, commentsQuantity);
+      };
+
+      const closeFullSizePicture = function (onDocumentKeydown, closeEvent) {
+        fullSizePicture.classList.add('hidden');
+        document.removeEventListener('keydown', onDocumentKeydown);
+        bigPictureCansel.removeEventListener('click', closeEvent);
+        socialComments.innerHTML = '';
+        commentsLoaderFullSizePicture.removeEventListener('click', loadComments);
+      };
+
+      // функция открытия полного размера фотографии
+      const openFullSizePicture = function (onDocumentKeydown, closeEvent) {
+        fullSizePicture.classList.remove('hidden');
+        document.addEventListener('keydown', onDocumentKeydown);
+        bigPictureCansel.addEventListener('click', closeEvent);
+        commentsLoaderFullSizePicture.addEventListener('click', loadComments);
+      };
+
+      // функция нажатия клавиши Escape для закрытия полного размера фотографии
+      const onDocumentKeydown = function () {
+        if (isEscapeKey) {
+          closeFullSizePicture();
+        }
+      };
 
       openFullSizePicture(onDocumentKeydown, closeFullSizePicture, loadComments);
 
